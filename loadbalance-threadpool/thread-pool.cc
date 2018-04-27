@@ -88,15 +88,11 @@ void ThreadPool::load_balance() {
 
 
 /* 
-1. while true loop + wait()
-2. workers[id].thunk() EXECUTE!!!
-3. update worker_t + available_threads->signal() 
-
 THREAD WILL NOT DIE, IT WILL JUST WAIT TO BE REUSED AFTER ONE LOOP
 MULTI-THREADED FUNCTION
 
-worker == functor == web server logic(thunk())
-its predicator == load_balance's signal, not empty(), not == 1
+worker == web server logic(thunk())
+its predicator == load_balance's signal
 */
 void ThreadPool::worker(size_t id) {
 	while (true) {			
