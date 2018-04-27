@@ -1,10 +1,5 @@
 /**
 Author: Steven Wong
-
-1. optimize not spawning 10 threads right away
-	=> data structure to check finished threads
-	=> load_balance() + worker() spawn n monitor free n busy threads"
-
 */
 #include "thread-pool.h"
 
