@@ -1,7 +1,3 @@
-/**
-
- */
-
 #ifndef _thread_pool_
 #define _thread_pool_
 
@@ -20,8 +16,7 @@ class ThreadPool {
  public:
  	ThreadPool(size_t numThreads);
  	void enqueue(const std::function<void(void)>& thunk);
- 	void wait();
-	// ~ThreadPool();
+ 	void wait();	
  	
  private:
  	// load_balance communicate with workers
@@ -42,11 +37,9 @@ class ThreadPool {
  	unique_ptr<semaphore> max_allowed_sema;
  	unique_ptr<semaphore> tasks_sema;
  	unique_ptr<semaphore> wait_sema;
- 	 	  	 	 
- 	// for destructor to call join()
+ 	 	  	 	  	
  	std::vector<std::thread> worker_threads;
  	// DDOS if queue full, drop request/function
- 	// queue_ts + vector_ts => atomic/thread safe
  	queue<function<void(void)> > tasks;
  	queue<int> free_threads;
  	

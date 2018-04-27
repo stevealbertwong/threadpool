@@ -1,46 +1,9 @@
 /**
-test thread pool with my self written semaphore
-
-using class to initialize threads with semaphore
-
-
-1. why threadpool
-	spawning threads expensive
-	threadpool reduce the overhead of creating thread
-	move + future + rvalue reference + packaged task
-	move
-		=> move converts lvalue to rvalue (temporary object without address)
-		=> avoid the performance hit due to deep copy by using a rvalue reference
-		=> here move is used since std::function<void> is rvalue
-	future and packaged task
-		=> future is a way to to block and get return from another thread
-		=> packaged_task
-
-	emplace_back: appends rvalue reference queue
-        => no unnecessary copy + call thread() on the fly
-
-2. why threadpool with load_balance
-	using load balancing to scale server
+Author: Steven Wong
 
 1. optimize not spawning 10 threads right away
 	=> data structure to check finished threads
 	=> load_balance() + worker() spawn n monitor free n busy threads"
-		
-2. safequeue.h + safevector.h 
-	=> atomic
-	=> cleaner code with lock guard
-
-3. why detach() 
-	=> no need to write destructor to join()
-	=> no need to write a vector of std::thread
-
-functor
-	=> each thread is semaphored by function_queue.empty()
-
-MANY TODOs
-using wait() to join threads 
-	=> need to stop thread cv predicate and quit while true loop
-	=> use std::vector<std::thread> to store spawned threads and destructor to join()
 
 */
 #include "thread-pool.h"
@@ -66,9 +29,7 @@ ThreadPool::ThreadPool(size_t numThreads) {
 	thread dt([this]() -> void { 
 		this->load_balance();
 	});
-	dt.detach();
-	
-
+	dt.detach();	
 }
 
 // surgery code to join threads
@@ -142,10 +103,7 @@ void ThreadPool::worker(size_t id) {
 		workers[id].ready_to_exec->wait();
 						
 		/* NOT LOCKED!!!!! OTHERWISE NOT MULTI-THREADING */		
-		workers[id].thunk(); 		
-		
-		// usleep(5000000); // 5 secs
-				
+		workers[id].thunk();
 		workers[id].thunk = NULL;
 		
 		free_threads_lock.lock();
@@ -161,8 +119,4 @@ void ThreadPool::worker(size_t id) {
 	}
 }
 
-// ThreadPool::~ThreadPool(){    
-//     for(std::thread &worker_thread: worker_threads)
-//         worker_thread.join();
-// }
 
