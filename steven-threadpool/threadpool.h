@@ -89,7 +89,6 @@ inline void ThreadPool::init(){
     }
 }
 
-
 // with arguments
 template<typename F, typename...Args>
 auto ThreadPool::enqueue(F&& f, Args&&... args)

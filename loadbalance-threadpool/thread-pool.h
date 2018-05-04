@@ -46,9 +46,10 @@ class ThreadPool {
  	void load_balance();
  	void worker(size_t id);
 
-  // prohibit copying
-  // ThreadPool(const ThreadPool& original) = delete;
-  // ThreadPool& operator=(const ThreadPool& rhs) = delete;
+  // prohibit copying threadpool object 
+  // copy constructor n copy assignment operator are deleted
+  ThreadPool(const ThreadPool& original) = delete;
+  ThreadPool& operator=(const ThreadPool& rhs) = delete;
 };
 
 #endif
