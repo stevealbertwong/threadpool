@@ -1,6 +1,6 @@
 # threadpool
 
-*architecture*
+## Architecture
 ![alt text](https://raw.githubusercontent.com/stevealbertwong/threadpool/master/web_architecture.png)
 
 ## TODO (loadbalance thread)
