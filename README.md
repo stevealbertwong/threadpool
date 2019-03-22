@@ -1,7 +1,7 @@
 # threadpool
 
 *architecture*
-![alt text](https://raw.githubusercontent.com/stevealbertwong/Toy-BitTorrent/master/web_architecture.png)
+![alt text](https://raw.githubusercontent.com/stevealbertwong/threadpool/master/web_architecture.png)
 
 ## TODO (loadbalance thread)
 1. Use wait to join threads, currently surgery code to use condition variable and detached() to wait for all threads to finish.
